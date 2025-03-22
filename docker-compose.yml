@@ -1,0 +1,45 @@
+# docker-compose.yml
+
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: backend
+    environment:
+      - NODE_ENV=production
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASS=password
+      - DB_NAME=photosite
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+      - redis
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: frontend
+    ports:
+      - "80:80"
+
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: photosite
+    ports:
+      - "3306:3306"
+      # 左边的3306是容器内部的端口，右边的3306是宿主机的端口
+    volumes:
+      - db_data:/var/lib/mysql
+      # 挂载一个数据卷，用于保存数据库文件
+  redis:
+    image: redis:alpine
+volumes:
+  db_data:
