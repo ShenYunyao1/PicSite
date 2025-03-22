@@ -1,3 +1,4 @@
+
     项目名：PhotoSite
     路径：d:\CodeProject\PhotoSite
     简介：一个上传、管理、展示图片或图集的网站
@@ -140,3 +141,4 @@ my-photo-site/
 ├── .env
 ├── package.json
 └── README.md
+
